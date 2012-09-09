@@ -51,8 +51,23 @@ const char *ErrorParse::ErrorString []={
 
 DFORCEINLINE bool jumpLineComment(const char* in,const char** out){
     if((*in)==lettersKey[TOKEN_LINE_COMMENT]){
-        ++in //jump #
-        while( ((*(in-1))=='\\'||(*in)!='\n')&&(*in)!='\0') ++in;
+        ++in; //jump #
+		while((*in)!='\0'){
+			++in;
+			if((*in)=='\r'){ //mac os, windows
+				if(*(in-1)=='\\'){ 
+					++in;
+					if(*(in+1)=='\n') ++in; //windows
+				    continue;
+				}
+				if(*(in+1)=='\n') ++in; //windows
+				break;
+			}
+			if((*in)=='\n'){ // linux, unix
+				if(*(in-1)=='\\'){ ++in; continue; }
+				break;
+			}
+		}
     }
     (*out)=in;
     if((*in)=='\0') return FIND_ENDFILE;

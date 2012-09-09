@@ -27,7 +27,27 @@ EBNF
     # line 1\
       line 2\
       line 3
-    
+
+######String Special Characters
+
+	Newline	NL (LF)	10	\n
+	Horizontal tab	HT	9	\t
+	Vertical tab	VT	11	\v
+	Backspace	BS	8	\b
+	Carriage return	CR	13	\r
+	Formfeed	FF	12	\f
+	Alert	BEL	7	\a
+	Backslash	\	92	\\
+	Question mark	?	63	\?
+	Single quotation mark	'	39	\'
+	Double quotation mark	"	34	\"
+
+######Multi-Line strings
+
+	"\
+	hello\
+	world\
+	"
 
 
 Compiling
