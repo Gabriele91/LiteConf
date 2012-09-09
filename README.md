@@ -6,17 +6,19 @@ LiteConf is a lightweight and easy to use library written in C++ able to read an
 
 ######Version 1.5
 
-BNF
+EBNF
 -------
 
     <number> is floating point value
     <string> like CString
     <word> is a singol word without special chars
     
-    <array> := '['  [<string>|<number>] [,<array>] ']'
+    <value> := [<string>|<number>|<array>]
     <name> := <word>|<string> 
-    <Value> := <name> ':' [<string>|<number>|<array>] ;
-    <Block> := '.' <name> '{' [<Value>] [<Block>] '}'
+    
+    <array> := "["  [<value> {[ "," <value> ]}] "]"
+    <property> := <name> ":" [<value>] ";"
+    <block> := "." <name> "{" { [<property>] }  { [<block>] } "}"
  
 
 
