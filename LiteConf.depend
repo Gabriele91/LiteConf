@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1346950179 source:c:\users\gabriele\desktop\liteconf\example\reader.cpp
+	"../LiteConfig.h"
+	<iostream>
+
+1347116126 c:\users\gabriele\desktop\liteconf\liteconfig.h
+	<string>
+	<vector>
+	<list>
+	<map>
+	<iostream>
+	<sstream>
+	<cstring>
+	<cstdlib>
+	<stdio.h>
+
+1347116476 source:c:\users\gabriele\desktop\liteconf\liteconfig.cpp
+	"LiteConfig.h"
+

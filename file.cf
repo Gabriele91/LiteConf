@@ -1,0 +1,23 @@
+
+array:[1, 5, "lol", [":)"], [3],["..",0,"4"]];
+
+"Root value":"I'm in...\nroot!!\n\n";
+
+. main
+{
+   . "Name"
+   {
+       Chicago : "Jim";
+       Chicago : "Other";
+	   "New York": "Kim";
+   }
+
+   . Name
+   {
+		value1 : 1;
+		values : 0;
+		values : 1;
+		values : 2;
+   }
+
+}
