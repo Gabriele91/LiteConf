@@ -4,7 +4,7 @@
 ##About
 LiteConf is a lightweight and easy to use library written in C++ able to read and write configuration files.
 
-######Version 1.5
+######Version 1.6
 
 EBNF
 -------
@@ -20,7 +20,14 @@ EBNF
     <property> := <name> ":" [<value>] ";"
     <block> := "." <name> "{" { [<property>] }  { [<block>] } "}"
  
-
+######Single-Line comments
+    # it is a comment
+ 
+######Multi-Line comments
+    # line 1\
+      line 2\
+      line 3
+    
 
 
 Compiling

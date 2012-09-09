@@ -2,7 +2,7 @@
 #define LITE_CONFIG_H
 /**********************************************************************************
 * @autor: Gabriele Di Bari
-* @version 1.5
+* @version 1.6
 *
 * MIT LICENSE
 *

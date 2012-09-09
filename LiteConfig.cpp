@@ -28,8 +28,9 @@ namespace LiteConf{
             TOKEN_OPEN_ARRAY=5,
             TOKEN_NEXT_ARRAY_VALUE=6,
             TOKEN_END_ARRAY=7,
+            TOKEN_LINE_COMMENT=8
         };
-        char lettersKey[]={'.','{','}',':',';','[',',',']'};
+        char lettersKey[]={'.','{','}',':',';','[',',',']','#'};
         char lettersJump[]={' ','\t','\r','\n'};
 };
 
@@ -48,13 +49,23 @@ const char *ErrorParse::ErrorString []={
         "not found array finalizer "
 };
 
+DFORCEINLINE bool jumpLineComment(const char* in,const char** out){
+    if((*in)==lettersKey[TOKEN_LINE_COMMENT]){
+        ++in //jump #
+        while( ((*(in-1))=='\\'||(*in)!='\n')&&(*in)!='\0') ++in;
+    }
+    (*out)=in;
+    if((*in)=='\0') return FIND_ENDFILE;
+    return FIND_GOOD;
+}
+
 DFORCEINLINE bool jumpKeys(const char* in){
     bool val=false;
     for(unsigned int i=0;i<sizeof(lettersJump) && val==false;++i) val=val||((*in)==lettersJump[i]);
     return val;
 }
 DFORCEINLINE uchar jumpSpace(const char* in,const char** out){
-    while(jumpKeys(in) && (*in)!='\0') ++in;
+    while(jumpLineComment(in,&in) && jumpKeys(in) && (*in)!='\0') ++in;
     if((*in)=='\0') return FIND_ENDFILE;
     (*out)=in; return FIND_GOOD;
 }
@@ -271,7 +282,7 @@ std::string Value::ToString() const {
 	if(type==VALUE_ARRAY){
 
 		std::string tmp("[ ");
-		for(unsigned int i=0;i<value._array->size();++i){ 
+		for(unsigned int i=0;i<value._array->size();++i){
 			if((*(value._array))[i]->type==Value::VALUE_STRING){
 				std::string outstring;
 				makeACString((*(value._array))[i]->value._string,outstring);
@@ -344,14 +355,14 @@ uchar Value::ParseArray(Value **out,ErrorParse& error,const char* start,const ch
 	//void array []
     if(isEndArray(in+1,&in)==FIND_GOOD){
 		(*end)=in;
-		return FIND_GOOD; 
+		return FIND_GOOD;
 	}
     //tmp string
     std::string stmp;
     //tmp float
     float ftmp;
 
-    do{	
+    do{
 	   jumpSpace(in+1,&in); --in;
        //"...
        if(isString(in+1)==FIND_GOOD){
@@ -361,7 +372,7 @@ uchar Value::ParseArray(Value **out,ErrorParse& error,const char* start,const ch
                 return FIND_BAD;
             }
             (*out)->value._array->push_back(new Value("",stmp));
-       } 
+       }
 	   //[....
 	   else if(isArray(in+1)==FIND_GOOD){
                 //Array
@@ -543,7 +554,7 @@ std::string Block::MakeLiteScript(){
 }
 
 
-ObjPushArray Block::PushArray(const std::string& name){    
+ObjPushArray Block::PushArray(const std::string& name){
 	Value *out;
 	out=new Value();
 	out->name=name;
@@ -665,10 +676,10 @@ Block* Script::GetRoot(){
 
 
 ////////////////////////////////////
-std::ostream& LiteConf::operator<<(std::ostream &output,Value* value){ 
+std::ostream& LiteConf::operator<<(std::ostream &output,Value* value){
 	output<< value->ToString(); return output;
 }
-std::ostream& LiteConf::operator<<(std::ostream &output,const Value::ValueArray& value){ 
+std::ostream& LiteConf::operator<<(std::ostream &output,const Value::ValueArray& value){
 	output<< value.ptr->ToString(); return output;
 }
 ////////////////////////////////////
