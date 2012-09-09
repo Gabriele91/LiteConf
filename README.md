@@ -15,7 +15,7 @@ BNF
     
     <array> := '['  [<string>|<number>] [,<array>] ']'
     <name> := <word>|<string> 
-    <Value> := <name> ':' [<string>|<number>] ;
+    <Value> := <name> ':' [<string>|<number>|<array>] ;
     <Block> := '.' <name> '{' [<Value>] [<Block>] '}'
  
 
