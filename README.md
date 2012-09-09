@@ -144,7 +144,7 @@ Example
 		}
 		
 		//get address values
-		LiteConf::Block *bkAddress=bk->>GetFirstBlock("address");
+		LiteConf::Block *bkAddress=bk->GetFirstBlock("address");
 		
 		if(bkAddress){
 			LiteConf::IteratorValues itValues=bkAddress->GetValues();

@@ -63,7 +63,7 @@ namespace LiteConf{
         //class declaration
         struct Value;
         struct Block;
-		struct ObjPushArray;
+        struct ObjPushArray;
         class  Script;
         typedef std::list<Value*>::iterator ValuesIterator;
         typedef std::list<Block*>::iterator BlocksIterator;
@@ -108,7 +108,7 @@ namespace LiteConf{
         struct Value{
 
             friend struct Block;
-		    friend struct ObjPushArray;
+            friend struct ObjPushArray;
 
         protected:
 
@@ -121,12 +121,12 @@ namespace LiteConf{
                 char *_string;
                 float _float;
             }value; ///< value
-		
+        
             /**
             * Value constructor.
             */
             Value();
-			/**
+            /**
             * Value destructor.
             */
             ~Value();
@@ -161,107 +161,107 @@ namespace LiteConf{
                 VALUE_STRING=2, ///< value is a string
                 VALUE_ARRAY=3   ///< value is a array
             };
-			/**
-			* Class array overload Value::operator[]
-			*/ 
-			struct ValueArray{ 			
-			        ValueArray operator[] (unsigned int i) { return ValueArray(ptr->GetValueArray(i)); }  
-			        ValueArray operator[] (unsigned int i) const { return ValueArray(ptr->GetValueArray(i)); }
+            /**
+            * Class array overload Value::operator[]
+            */ 
+            struct ValueArray{             
+                    ValueArray operator[] (unsigned int i) { return ValueArray(ptr->GetValueArray(i)); }  
+                    ValueArray operator[] (unsigned int i) const { return ValueArray(ptr->GetValueArray(i)); }
                     /**
-					* If value is an array, return true
+                    * If value is an array, return true
                     * @return bool
-					*/
-					bool IsArray(){ return ptr->type==VALUE_ARRAY; }
+                    */
+                    bool IsArray(){ return ptr->type==VALUE_ARRAY; }
                     /**
-					* Return size array
+                    * Return size array
                     * @return size (unsigned int)
-					*/
+                    */
                     unsigned int Size(){ if(ptr->type==VALUE_ARRAY) return (ptr->value._array->size()); else return 0;  }
-					/**
+                    /**
                     * Push a string value and return there where it is pushed
                     * @param value (string)
                     * @return index
                     */
-   					unsigned int Push(const std::string& v){ 
+                       unsigned int Push(const std::string& v){ 
                        if(ptr->type==VALUE_ARRAY){ 
                            ptr->value._array->push_back(new Value("",v));
                            return Size()-1;
                        }
                        return -1; 
                     }
-					/**
+                    /**
                     * Push a number value and return there where it is pushed
                     * @param value (float)
                     * @return index
                     */
-   					unsigned int Push(float v){ 
+                       unsigned int Push(float v){ 
                        if(ptr->type==VALUE_ARRAY){ 
                            ptr->value._array->push_back(new Value("",v));
                            return Size()-1;
                        }
                        return -1; 
                     }
-					/**
+                    /**
                     * Push an array and return there where it is pushed
                     * @return index
                     */
-   					unsigned int PushArray(){ 
-                       if(ptr->type==VALUE_ARRAY){					
+                       unsigned int PushArray(){ 
+                       if(ptr->type==VALUE_ARRAY){                    
                            //array
                            Value *out=new Value();
-					       out->type=Value::VALUE_ARRAY;
-					       out->value._array=new std::vector<Value*>();
+                           out->type=Value::VALUE_ARRAY;
+                           out->value._array=new std::vector<Value*>();
                            ptr->value._array->push_back(out); 
-					       return Size()-1;
+                           return Size()-1;
                        }
-					   return -1;
+                       return -1;
                     }
-					/**
+                    /**
                     * Remove a value from array
                     * @param index
                     */
-					void Remove(unsigned int i){
-					       if(i<Size()){
-							delete (*ptr->value._array)[i];
-					        ptr->value._array->erase(ptr->value._array->begin()+i);
+                    void Remove(unsigned int i){
+                           if(i<Size()){
+                            delete (*ptr->value._array)[i];
+                            ptr->value._array->erase(ptr->value._array->begin()+i);
                            }
                     }
 
-			        Value * operator->() { return ptr; }  
-			        Value * operator->() const { return ptr; } 
+                    Value * operator->() { return ptr; }  
+                    Value * operator->() const { return ptr; } 
 
-				    operator float () const { return ptr->ToFloat(); }
-				    operator std::string () const { return ptr->ToString(); }
-					ValueArray(const ValueArray& v):ptr(v.ptr){}		
+                    operator float () const { return ptr->ToFloat(); }
+                    operator std::string () const { return ptr->ToString(); }
+                    ValueArray(const ValueArray& v):ptr(v.ptr){}        
 
-			    private: 
-					friend struct Value;
-				    friend std::ostream& operator<<(std::ostream &output,const Value::ValueArray& value);
+                private: 
+                    friend struct Value;
+                    friend std::ostream& operator<<(std::ostream &output,const Value::ValueArray& value);
 
-					Value *ptr; 
-					ValueArray():ptr(0){}
-					ValueArray( Value *ptr ):ptr(ptr){}		
-			};
+                    Value *ptr; 
+                    ValueArray():ptr(0){}
+                    ValueArray( Value *ptr ):ptr(ptr){}        
+            };
             /**
             * Get value type.
             * @return value type
             */
             uchar GetType(){ return this->type; }
             /**
-			* If value is an array, return true
+            * If value is an array, return true
             * @return bool
-			*/
-			bool IsArray(){ return type==VALUE_ARRAY; }
+            */
+            bool IsArray(){ return type==VALUE_ARRAY; }
             /**
-			* If value is a string, return true
+            * If value is a string, return true
             * @return bool
-			*/
-			bool IsString(){ return type==VALUE_STRING; }
+            */
+            bool IsString(){ return type==VALUE_STRING; }
             /**
-			* If value is a number, return true
+            * If value is a number, return true
             * @return bool
-			*/
-			bool IsNumber(){ return type==VALUE_NUMBER; }
+            */
+            bool IsNumber(){ return type==VALUE_NUMBER; }
             /**
             * Get value name.
             * @return value name (std::string)
@@ -319,15 +319,15 @@ namespace LiteConf{
             }
             /**
             * Get a array value 
-			* @param ID value
+            * @param ID value
             * @return value pointer
             */
             Value* GetValueArray(unsigned int id) const{
                 if(type==VALUE_ARRAY){
-					if(value._array->size()>id)
-						return (*(value._array))[id];
-					else
-						return 0;
+                    if(value._array->size()>id)
+                        return (*(value._array))[id];
+                    else
+                        return 0;
                 }
                 else{
                     return 0;
@@ -355,20 +355,20 @@ namespace LiteConf{
                 if(type==VALUE_ARRAY)  return (float)(value._array->size());
                 return 0;
             }
-			/**
+            /**
             * Cast float
-		    */
-		    operator float () const { return this->ToFloat(); }
-		    operator std::string () const { return this->ToString(); }			
-			friend std::ostream& operator<<(std::ostream &output,Value* value);
-			ValueArray operator[] (unsigned int i) { return ValueArray(this->GetValueArray(i)); }  
-			ValueArray operator[] (unsigned int i) const { return ValueArray(this->GetValueArray(i)); } 
-			//
-        };	    
-		/**@addtogroup std::cout<<Value overload */
+            */
+            operator float () const { return this->ToFloat(); }
+            operator std::string () const { return this->ToString(); }            
+            friend std::ostream& operator<<(std::ostream &output,Value* value);
+            ValueArray operator[] (unsigned int i) { return ValueArray(this->GetValueArray(i)); }  
+            ValueArray operator[] (unsigned int i) const { return ValueArray(this->GetValueArray(i)); } 
+            //
+        };        
+        /**@addtogroup std::cout<<Value overload */
         /*@{*/
         extern std::ostream& operator<<(std::ostream &output,Value* value);
-		extern std::ostream& operator<<(std::ostream &output,const Value::ValueArray& value);
+        extern std::ostream& operator<<(std::ostream &output,const Value::ValueArray& value);
         /*@}*/
 
         /** @addtogroup IteratorsGroup */
@@ -472,64 +472,64 @@ namespace LiteConf{
         /*@}*/
 
 
-		/**
+        /**
         * Class push array
         */
-		struct ObjPushArray{
+        struct ObjPushArray{
 
-				  friend struct Block;
+                  friend struct Block;
                   /**
                   * Push a string value and return there where it is pushed
                   * @param value (string)
                   * @return ObjPushArray
                   */
                   ObjPushArray Push(const std::string& value){
-					this->value->value._array->push_back(new Value("",value));
-					return *this;
-				  }
+                    this->value->value._array->push_back(new Value("",value));
+                    return *this;
+                  }
                   /**
                   * Push a number value and return there where it is pushed
                   * @param value (float)
                   * @return ObjPushArray
                   */
                   ObjPushArray Push(float value){
-					this->value->value._array->push_back(new Value("",value));
-					return *this;
-				  }				 
-				  /**
-				  * Push an sub array and return where you add values into array
-				  * @param name array (string)
-				  * @return ObjPushArray
-				  */
-				  ObjPushArray PushArray(){
-					//array
+                    this->value->value._array->push_back(new Value("",value));
+                    return *this;
+                  }                 
+                  /**
+                  * Push an sub array and return where you add values into array
+                  * @param name array (string)
+                  * @return ObjPushArray
+                  */
+                  ObjPushArray PushArray(){
+                    //array
                     Value *out=new Value();
-					out->type=Value::VALUE_ARRAY;
-					out->value._array=new std::vector<Value*>();
-					//array
-					//add array
-					this->value->value._array->push_back(out);
-					//return pusher class
-					return ObjPushArray(obj,out,this->value);
-				  }
+                    out->type=Value::VALUE_ARRAY;
+                    out->value._array=new std::vector<Value*>();
+                    //array
+                    //add array
+                    this->value->value._array->push_back(out);
+                    //return pusher class
+                    return ObjPushArray(obj,out,this->value);
+                  }
                   /**
                   * Return to super array
                   */
-				  ObjPushArray Closure(){ return ObjPushArray(obj,backValue); }
+                  ObjPushArray Closure(){ return ObjPushArray(obj,backValue); }
                   /**
                   * Return to block
                   */
-				  Block* Back(){ return obj; }
+                  Block* Back(){ return obj; }
 
-				  //overload operator
-				  ObjPushArray* operator->() { return (ObjPushArray* )this; }
-				  ObjPushArray* operator->() const { return (ObjPushArray* )this; }
-				  
-				  protected:
-					
-				  Value *value;
-				  Value *backValue;
-				  Block* obj;
+                  //overload operator
+                  ObjPushArray* operator->() { return (ObjPushArray* )this; }
+                  ObjPushArray* operator->() const { return (ObjPushArray* )this; }
+                  
+                  protected:
+                    
+                  Value *value;
+                  Value *backValue;
+                  Block* obj;
 
                   ObjPushArray()
                   :obj(0)
@@ -590,7 +590,7 @@ namespace LiteConf{
             * Return a script from this block without spaces
             */
             std::string MakeLiteScript();
-	
+    
         public:
             /**
             * Get name block;
@@ -665,9 +665,9 @@ namespace LiteConf{
             */
             IteratorBlocks GetBlocks(const std::string& name);
         };
-		/**
-		* Class script manager
-		*/
+        /**
+        * Class script manager
+        */
         class Script{
 
             private:
