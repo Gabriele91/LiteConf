@@ -4,7 +4,7 @@
 ##About
 LiteConf is a lightweight and easy to use library written in C++ able to read and write configuration files.
 
-#####Version 1.5
+######Version 1.5
 
 BNF
 -------
@@ -40,7 +40,9 @@ Make only libary or example
 
 In LiteConfigVS open LiteConfigVS.sln and compile all project.
 
+###Code::Blocks
 
+Open LiteConf.cbp select specific "build target" and click on build.
 
 Example
 -------
