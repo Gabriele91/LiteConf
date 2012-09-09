@@ -49,6 +49,15 @@ EBNF
 	world\
 	"
 
+Differences between LiteConf and JSON:
+-------
+
+- In JSON you can't use only a word for a value name or object name.
+- In LiteConf you can add comments.
+- LiteConf supports multiline strings.
+- A object in LiteConf starts with point.
+- LiteConf has arrays of values, JSON has arrays of objects.
+
 
 Compiling
 -------
