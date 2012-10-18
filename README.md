@@ -1,4 +1,3 @@
-
 ![Alt text](https://github.com/Gabriele91/LiteConf/blob/master/LiteConf.png?raw=true)
 =============
 ##About
@@ -11,7 +10,7 @@ EBNF
 
     <number> is floating point value
     <string> like CString
-    <word> is a singol word without special chars
+    <word> is a single word without special chars
     
     <value> := [<string>|<number>|<array>]
     <name> := <word>|<string> 
