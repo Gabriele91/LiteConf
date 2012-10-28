@@ -46,7 +46,8 @@ const char *ErrorParse::ErrorString []={
         "not found value finalizer ",
         "file not found ",
         "error parse array ",
-        "not found array finalizer "
+        "start array not found",
+        "end array not found"
 };
 
 DFORCEINLINE bool jumpLineComment(const char* in,const char** out){
@@ -366,7 +367,12 @@ uchar Value::ParseArray(Value **out,ErrorParse& error,const char* start,const ch
 
     (*out)=new Value();
     (*out)->type=Value::VALUE_ARRAY;
-    (*out)->value._array=new std::vector<Value*>();
+    (*out)->value._array=new std::vector<Value*>();	
+	//<name> : -->[ "[" ] .... "]"	
+	if(jumpSpace(in,&in)!=FIND_GOOD){
+		error.PushError(countChar(start,'\n',in),ErrorParse::ERROR_FIND_START_ARRAY);
+		return FIND_BAD;
+	}
 	//void array []
     if(isEndArray(in+1,&in)==FIND_GOOD){
 		(*end)=in;
@@ -657,7 +663,7 @@ bool Script::Parse(const std::string& filename){
         free(string);
         return isGoodLoad;
     }
-	error.PushError(0,ErrorParse::ERROR_FILE_NOT_FOUND);
+	error.PushError(0,ErrorParse::ERROR_SCRIPT_FILE_NOT_FOUND);
     return false;
 }
 bool Script::ParseString(const std::string& scode){

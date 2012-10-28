@@ -11,11 +11,11 @@ int main(){
 
 	//std::vector<LiteConf::Value*> *marray=script.GetRoot()->GetFirstValue("array")->GetArray();
 	//or
-	for(unsigned int i=0;i<script.GetRoot()->GetFirstValue("array")->Array().Size(); ++i)
-		std::cout<< "array:["<< script.GetRoot()->GetFirstValue("array")->Array()[i] << ", ";
+	for(unsigned int i=0;i<script.GetRoot()->GetFirstValue("array")->Size(); ++i)
+		std::cout<< "array:["<< script.GetRoot()->GetFirstValue("array")->At(i) << ", ";
 	std::cout<< "]\n";
 	//add an element into sub array
-	script.GetRoot()->GetFirstValue("array")->Array()[3].Push("add from c++");
+	script.GetRoot()->GetFirstValue("array")->At(3)->Push("add from c++");
 
 
 	std::cout << script.GetRoot()->GetFirstValue("Root value")<< std::endl;
@@ -54,5 +54,6 @@ int main(){
 
 
 	std::cout << script.MakeScript();
+	system("PAUSE");
 	return 0;
 }

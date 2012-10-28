@@ -3,7 +3,7 @@
 ##About
 LiteConf is a lightweight and easy to use library written in C++ able to read and write configuration files.
 
-######Version 1.6
+######Version 1.7
 
 EBNF
 -------
